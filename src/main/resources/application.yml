@@ -40,6 +40,8 @@ security:
     app-run-delete-history-token: false
     # 配置加密方式
     id-for-encode: bcrypt
+    # 基于 @PreAuthorize 注解权限授权，微信公众号/小程序这里无需权限授权访问的，推荐使用 auth-type: CODE
+    # 方法上不添加 @PreAuthorize 权限就不会进行权限授权认证，只认证登录token
     auth-type: CODE
     dynamic-refresh-token: true
 #    service-name: service
