@@ -4,7 +4,7 @@ server:
 spring:
   redis:
     database: 3
-    host: 192.168.1.145
+    host: 192.168.3.62
     port: 6379
 
 # security
@@ -12,7 +12,7 @@ security:
   config:
     captcha-code:
       enable: true
-    enableCors: false
+    enableCors: true
     header: Authorization
     # 令牌前缀
     token-start-with: bearer
@@ -30,7 +30,7 @@ security:
     single-login: false
     # 匿名访问url
     ignoring-urls:
-      - /api/login
+      - /api/v1
     # token校验访问url
 #    auth-urls-prefix:
 #      - /api/**
@@ -42,11 +42,11 @@ security:
     id-for-encode: bcrypt
     # 基于 @PreAuthorize 注解权限授权，微信公众号/小程序这里无需权限授权访问的，推荐使用 auth-type: CODE
     # 方法上不添加 @PreAuthorize 权限就不会进行权限授权认证，只认证登录token
-    auth-type: CODE
+    auth-type: SERVICE
     dynamic-refresh-token: true
-#    service-name: service
-#    service-handler-method: methodName
+    service-name: service
+    service-handler-method: methodName
 ##    可选- 如果是api服务层,前端需要传参数：接口方法名称
 ##    如果设置为true，需要serviceHandlerMethod 指定前端要调用的方法的参数名称
 ##    这时前端不只是传serviceName 需要调用的服务，还要传 serviceHandlerMethod具体要调用服务下的哪个接口方法
-#    api-service: true
+    api-service: true

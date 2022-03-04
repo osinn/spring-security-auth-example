@@ -16,6 +16,8 @@ public interface IUserService {
 
     List<UserVO> pageUser(Map<String, Object> params);
 
+    List<UserVO> testPermission();
+
     List<UserVO> getUserAll();
 
 }

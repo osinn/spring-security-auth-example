@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * 此项目只是做为 @API 使用演示，不需要登录认证，权限认证
+ * 不是api服务，外部访问不了类接口
  *
  * @author wency_cai
  */
@@ -28,17 +28,17 @@ public class SecurityServiceImpl implements ISecurityService {
      */
     @Override
     public JwtUser customAuth(Object principal) {
+
         JwtUser jwtUser = new JwtUser();
         jwtUser.setId(1401043674048851970L);
         jwtUser.setNickname("超级管理员");
-        jwtUser.setRoles(Lists.newArrayList());
-        jwtUser.setAuthorities(Lists.newArrayList());
         jwtUser.setAccount("admin");
+
         return jwtUser;
     }
 
     /**
-     * 比如移动端不需要权限控制直接返回空
+     * 获取用户的角色以及权限
      *
      * @param userId
      * @return
@@ -46,8 +46,12 @@ public class SecurityServiceImpl implements ISecurityService {
     @Override
     public JwtRoleInfo fetchRolePermissionInfo(Object userId) {
         JwtRoleInfo jwtRoleInfo = new JwtRoleInfo();
-        jwtRoleInfo.setPermissions(Lists.newArrayList());
-        jwtRoleInfo.setRoles(Lists.newArrayList());
+        JwtRoleInfo.BaseRoleInfo baseRoleInfo = new JwtRoleInfo.BaseRoleInfo();
+        baseRoleInfo.setRoleCode("test");
+        baseRoleInfo.setId(1);
+        baseRoleInfo.setName("demo");
+        jwtRoleInfo.setPermissions(Lists.newArrayList("test:111"));
+        jwtRoleInfo.setRoles(Lists.newArrayList(baseRoleInfo));
         return jwtRoleInfo;
     }
 

@@ -1,31 +1,25 @@
 package com.gitee.osinn.example.controller;
 
-import com.gitee.osinn.boot.securityjwt.constants.JwtConstant;
-import com.gitee.osinn.boot.securityjwt.security.dto.JwtUser;
-import com.gitee.osinn.boot.securityjwt.security.dto.OnlineUser;
-import com.gitee.osinn.boot.securityjwt.service.IOnlineUserService;
-import com.gitee.osinn.boot.securityjwt.service.ISecurityService;
-import com.gitee.osinn.boot.securityjwt.utils.DesEncryptUtils;
-import com.gitee.osinn.boot.securityjwt.utils.RedisUtils;
+import com.alibaba.fastjson.JSON;
 import com.gitee.osinn.boot.securityjwt.utils.SpringContextHolder;
-import com.google.common.collect.Lists;
+import com.gitee.osinn.example.result.R;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotBlank;
 import java.lang.reflect.Method;
-import java.util.Date;
 import java.util.Map;
-import java.util.UUID;
 
 /**
- * 描述
+ * 单独测试@API注解与@APIMethodPermission注解配合使用
  *
  * @author wency_cai
  */
+@Slf4j
 @RestController
 public class ApiController {
 
@@ -35,11 +29,13 @@ public class ApiController {
         /**
          * 服务名称
          */
+        @NotBlank(message = "服务名称不能为空")
         private String service;
 
         /**
          * 业务方法名称
          */
+        @NotBlank(message = "业务方法不能为空")
         private String methodName;
 
         /**
@@ -47,31 +43,7 @@ public class ApiController {
          */
         private Map<String, Object> params;
 
-        private String token;
     }
-
-    @Data
-    public static class LoginParams {
-
-        /**
-         * 登录账号
-         */
-        private String account;
-
-        /**
-         * 密码
-         */
-        private String password;
-    }
-
-    @Autowired
-    private RedisUtils redisUtils;
-
-    @Autowired
-    private ISecurityService securityService;
-
-    @Autowired
-    private IOnlineUserService onlineUserService;
 
     /**
      * 统一API入口
@@ -80,9 +52,23 @@ public class ApiController {
      * @return
      * @throws Exception
      */
-    @PostMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/v1", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Object invokeApi(@RequestBody @Validated Params param) throws Exception {
-        Object service = SpringContextHolder.getBean(param.getService());
+        Object service = null;
+        try {
+            service = SpringContextHolder.getBean(param.getService());
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        if (ObjectUtils.isEmpty(service)) {
+            return R.fail("服务不存在");
+        }
+
+        log.info("请求服务：[{}]，服务接口：[{}]\n请求参数：[{}]",
+                param.getService(),
+                param.getMethodName(),
+                param.getParams() == null ? "" : JSON.toJSONString(param.getParams()));
+
         Method method;
         if (param.getParams() == null) {
             method = service.getClass().getMethod(param.getMethodName());
@@ -92,43 +78,6 @@ public class ApiController {
             method = service.getClass().getMethod(param.getMethodName(), Map.class);
             return method.invoke(service, param.getParams());
         }
-    }
-
-    /**
-     * 统一API入口
-     *
-     * @param param
-     * @return
-     * @throws Exception
-     */
-    @PostMapping(value = "/api/login", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String login(@RequestBody @Validated LoginParams param, HttpServletRequest request) throws Exception {
-        JwtUser jwtUser = onlineUserService.customAuth(param, request);
-        return jwtUser.getToken();
-    }
-
-    /**
-     * 统一API入口
-     *
-     * @param param
-     * @return
-     * @throws Exception
-     */
-    @PostMapping(value = "/api/ping", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String ping(@RequestBody @Validated Params param) throws Exception {
-        return "OK";
-    }
-    /**
-     * 统一API入口
-     *
-     * @param param
-     * @return
-     * @throws Exception
-     */
-    @PostMapping(value = "/api/getTokenExpire", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Object getTokenExpire(@RequestBody @Validated Params param) throws Exception {
-        long expire = redisUtils.getExpire(JwtConstant.ONLINE_USER_INFO_KEY_PREFIX + DesEncryptUtils.md5DigestAsHex(param.getToken()));
-        return expire;
     }
 
 }
