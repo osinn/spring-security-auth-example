@@ -1,7 +1,7 @@
 package com.gitee.osinn.example.service.impl;
 
-import com.gitee.osinn.boot.securityjwt.annotation.API;
-import com.gitee.osinn.boot.securityjwt.annotation.APIMethodPermission;
+import io.github.osinn.securitytoken.annotation.API;
+import io.github.osinn.securitytoken.annotation.APIMethodPermission;
 import com.gitee.osinn.example.service.IUserService;
 import com.gitee.osinn.example.vo.UserVO;
 import org.springframework.stereotype.Service;

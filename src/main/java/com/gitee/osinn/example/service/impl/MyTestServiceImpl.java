@@ -1,13 +1,13 @@
 package com.gitee.osinn.example.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.gitee.osinn.boot.securityjwt.annotation.API;
-import com.gitee.osinn.boot.securityjwt.annotation.APIMethodPermission;
-import com.gitee.osinn.boot.securityjwt.security.dto.AuthUser;
-import com.gitee.osinn.boot.securityjwt.security.dto.CaptchaCodeDTO;
-import com.gitee.osinn.boot.securityjwt.security.dto.JwtUser;
-import com.gitee.osinn.boot.securityjwt.service.IOnlineUserService;
-import com.gitee.osinn.boot.securityjwt.service.ISecurityCaptchaCodeService;
+import io.github.osinn.securitytoken.annotation.API;
+import io.github.osinn.securitytoken.annotation.APIMethodPermission;
+import io.github.osinn.securitytoken.security.dto.AuthUser;
+import io.github.osinn.securitytoken.security.dto.CaptchaCodeDTO;
+import io.github.osinn.securitytoken.security.dto.JwtUser;
+import io.github.osinn.securitytoken.service.IOnlineUserService;
+import io.github.osinn.securitytoken.service.ISecurityCaptchaCodeService;
 import com.gitee.osinn.example.service.IMyTestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

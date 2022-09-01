@@ -1,7 +1,7 @@
 package com.gitee.osinn.example.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.gitee.osinn.boot.securityjwt.utils.SpringContextHolder;
+import io.github.osinn.securitytoken.utils.SpringContextHolder;
 import com.gitee.osinn.example.result.R;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;

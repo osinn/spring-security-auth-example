@@ -27,9 +27,9 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.gitee.osinn</groupId>
+            <groupId>io.github.osinn</groupId>
             <artifactId>spring-security-auth-starter</artifactId>
-            <version>1.0</version>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -46,6 +46,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.76</version>
+        </dependency>
+
 <!--        <dependency>-->
 <!--            <groupId>io.netty</groupId>-->
 <!--            <artifactId>netty-all</artifactId>-->

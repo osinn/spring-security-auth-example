@@ -1,6 +1,6 @@
 package com.gitee.osinn.example.exception;
 
-import com.gitee.osinn.boot.securityjwt.exception.SecurityJwtException;
+import io.github.osinn.securitytoken.exception.SecurityJwtException;
 import com.gitee.osinn.example.result.R;
 import com.gitee.osinn.example.result.ResultCode;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,6 @@
 package com.gitee.osinn.example;
 
-import com.gitee.osinn.boot.securityjwt.annotation.EnableSecurityJwt;
+import io.github.osinn.securitytoken.annotation.EnableSecurityJwt;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

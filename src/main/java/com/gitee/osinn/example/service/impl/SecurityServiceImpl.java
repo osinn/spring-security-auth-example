@@ -1,10 +1,10 @@
 package com.gitee.osinn.example.service.impl;
 
-import com.gitee.osinn.boot.securityjwt.security.dto.JwtRoleInfo;
-import com.gitee.osinn.boot.securityjwt.security.dto.JwtUser;
-import com.gitee.osinn.boot.securityjwt.security.dto.OnlineUser;
-import com.gitee.osinn.boot.securityjwt.security.dto.ResourcePermission;
-import com.gitee.osinn.boot.securityjwt.service.ISecurityService;
+import io.github.osinn.securitytoken.security.dto.JwtRoleInfo;
+import io.github.osinn.securitytoken.security.dto.JwtUser;
+import io.github.osinn.securitytoken.security.dto.OnlineUser;
+import io.github.osinn.securitytoken.security.dto.ResourcePermission;
+import io.github.osinn.securitytoken.service.ISecurityService;
 import com.google.common.collect.Lists;
 import org.springframework.stereotype.Service;
 

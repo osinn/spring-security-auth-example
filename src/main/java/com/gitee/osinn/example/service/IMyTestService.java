@@ -1,7 +1,7 @@
 package com.gitee.osinn.example.service;
 
-import com.gitee.osinn.boot.securityjwt.security.dto.CaptchaCodeDTO;
-import com.gitee.osinn.boot.securityjwt.security.dto.JwtUser;
+import io.github.osinn.securitytoken.security.dto.CaptchaCodeDTO;
+import io.github.osinn.securitytoken.security.dto.JwtUser;
 
 import java.util.Map;
 
