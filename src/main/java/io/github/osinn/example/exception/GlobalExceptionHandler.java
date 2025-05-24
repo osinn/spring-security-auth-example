@@ -1,12 +1,11 @@
-package com.gitee.osinn.example.exception;
+package io.github.osinn.example.exception;
 
-import io.github.osinn.securitytoken.exception.SecurityJwtException;
-import com.gitee.osinn.example.result.R;
-import com.gitee.osinn.example.result.ResultCode;
+import io.github.osinn.example.result.R;
+import io.github.osinn.example.result.ResultCode;
+import io.github.osinn.security.exception.SecurityAuthException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.AuthenticationException;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.nio.file.AccessDeniedException;
 import java.util.Objects;
 
 /**
@@ -38,9 +38,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = DisabledException.class)
     public ResponseEntity<R> disabledException(DisabledException e) throws Exception {
         log.error(e.getMessage(), e);
-        if(e.getCause() instanceof SecurityJwtException) {
-            SecurityJwtException securityJwtException = (SecurityJwtException)e.getCause();
-            return this.securityJwtException(securityJwtException);
+        if(e.getCause() instanceof SecurityAuthException securityJwtException) {
+            return this.securityAuthException(securityJwtException);
         }
         return buildResponseEntity(R.result(HttpStatus.UNAUTHORIZED.value(), "用户已被禁用"));
     }
@@ -54,19 +53,17 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = UsernameNotFoundException.class)
     public ResponseEntity<R> usernameNotFoundException(UsernameNotFoundException e) throws Exception {
         log.error(e.getMessage(), e);
-        if(e.getCause() instanceof SecurityJwtException) {
-            SecurityJwtException securityJwtException = (SecurityJwtException)e.getCause();
-            return this.securityJwtException(securityJwtException);
+        if(e.getCause() instanceof SecurityAuthException securityAuthException) {
+            return this.securityAuthException(securityAuthException);
         }
         return buildResponseEntity(R.result(HttpStatus.UNAUTHORIZED.value(), "用户不存在"));
     }
 
     @ExceptionHandler(value = AuthenticationException.class)
-    public ResponseEntity<R> AuthenticationExceptionHandler(AuthenticationException e) {
+    public ResponseEntity<R> authenticationExceptionHandler(AuthenticationException e) {
         log.error(e.getMessage(), e);
-        if(e.getCause() instanceof SecurityJwtException) {
-            SecurityJwtException securityJwtException = (SecurityJwtException)e.getCause();
-            return this.securityJwtException(securityJwtException);
+        if(e.getCause() instanceof SecurityAuthException securityAuthException) {
+            return this.securityAuthException(securityAuthException);
         }
         return buildResponseEntity(R.result(HttpStatus.UNAUTHORIZED.value(), e.getMessage()));
     }
@@ -81,9 +78,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = AccessDeniedException.class)
     public ResponseEntity<R> accessDeniedException(AccessDeniedException e) {
         log.error(e.getMessage(), e);
-        if(e.getCause() instanceof SecurityJwtException) {
-            SecurityJwtException securityJwtException = (SecurityJwtException)e.getCause();
-            return this.securityJwtException(securityJwtException);
+        if(e.getCause() instanceof SecurityAuthException securityAuthException) {
+            return this.securityAuthException(securityAuthException);
         }
         return buildResponseEntity(R.result(HttpStatus.UNAUTHORIZED.value(), "权限不足"));
     }
@@ -96,9 +92,8 @@ public class GlobalExceptionHandler {
         // 打印堆栈信息
         String message = "坏的凭证".equals(e.getMessage()) ? "用户名或密码不正确" : e.getMessage();
         log.error(message);
-        if(e.getCause() instanceof SecurityJwtException) {
-            SecurityJwtException securityJwtException = (SecurityJwtException)e.getCause();
-            return this.securityJwtException(securityJwtException);
+        if(e.getCause() instanceof SecurityAuthException securityAuthException) {
+            return this.securityAuthException(securityAuthException);
         }
         return buildResponseEntity(R.fail(message));
     }
@@ -107,8 +102,8 @@ public class GlobalExceptionHandler {
     /**
      * 处理自定义异常
      */
-    @ExceptionHandler(value = SecurityJwtException.class)
-    public ResponseEntity<R> securityJwtException(SecurityJwtException e) {
+    @ExceptionHandler(value = SecurityAuthException.class)
+    public ResponseEntity<R> securityAuthException(SecurityAuthException e) {
         // 打印堆栈信息
         log.error(e.getMessage(), e);
         if (e.getStatus() == null) {

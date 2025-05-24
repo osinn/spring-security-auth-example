@@ -1,6 +1,5 @@
-package com.gitee.osinn.example.result;
+package io.github.osinn.example.result;
 
-import cn.hutool.json.JSONObject;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -107,13 +106,6 @@ public class R<T> implements Serializable {
 
     public static <T> R<T> result(int code, T data, String message) {
         return new R<>(code, data, message);
-    }
-
-    public static R<JSONObject> result(String key, Object value) {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.set(key, value);
-        R<JSONObject> r = R.success(jsonObject);
-        return r;
     }
 
 }

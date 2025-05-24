@@ -1,8 +1,7 @@
-package com.gitee.osinn.example.vo;
+package io.github.osinn.example.vo;
 
 import lombok.Data;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -13,7 +12,7 @@ import java.util.Date;
  */
 @Data
 public class UserVO {
-    
+
     private Integer id;
 
     private String name;

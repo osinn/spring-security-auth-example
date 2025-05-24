@@ -1,4 +1,4 @@
-package com.gitee.osinn.example.result;
+package io.github.osinn.example.result;
 
 import java.io.Serializable;
 

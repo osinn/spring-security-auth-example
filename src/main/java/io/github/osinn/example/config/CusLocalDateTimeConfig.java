@@ -1,4 +1,4 @@
-package com.gitee.osinn.example.config;
+package io.github.osinn.example.config;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
