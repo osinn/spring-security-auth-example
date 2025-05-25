@@ -112,7 +112,7 @@ public class SecurityServiceImpl implements ISecurityService {
      * @return
      */
     @Override
-    public AuthRoleInfo fetchRolePermissionInfo(Serializable userId) {
+    public AuthRoleInfo getRolePermissionInfo(Object userId) {
         AuthRoleInfo jwtRoleInfo = new AuthRoleInfo();
 
         List<ResourcePermission> resourcePermissionList = new ArrayList<>();

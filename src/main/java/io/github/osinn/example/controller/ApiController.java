@@ -56,27 +56,38 @@ public class ApiController {
     @GetMapping("/getUserInfo")
     @PreAuthorize("hasAnyAuthority('system:dept:list')")
     public R<OnlineUser> getUserInfo() {
-        return R.success(TokenUtils.fetchOnlineUserInfo());
+        return R.success(TokenUtils.getOnlineUserInfo());
     }
 
     @GetMapping("/getUserInfo2")
-    @PreAuthorize("hasAnyAuthority('sys:user:list')")
+    @PreAuthorize("hasAnyAuthority('sys:user:list2')")
     public R<OnlineUser> getUserInfo2() {
-        return R.success(TokenUtils.fetchOnlineUserInfo());
+        return R.success(TokenUtils.getOnlineUserInfo());
     }
 
     @GetMapping("/getUserList")
     @PreAuthorize("@pms.hasPermission('sys:user:list:test')")
     public OnlineUser getUserList() {
-        return TokenUtils.fetchOnlineUserInfo();
+        return TokenUtils.getOnlineUserInfo();
     }
 
 
     @GetMapping("/getUserList2")
     @PreAuthorize("@pms.hasPermission('sys:user:list')")
     public OnlineUser getUserList2() {
-        OnlineUser onlineUser = TokenUtils.fetchOnlineUserInfo();
+        OnlineUser onlineUser = TokenUtils.getOnlineUserInfo();
         return onlineUser;
+    }
+
+    @GetMapping("/testNotLogin")
+    public OnlineUser testNotLogin() {
+        OnlineUser onlineUser = TokenUtils.getOnlineUserInfo();
+        return onlineUser;
+    }
+
+    @GetMapping("/testNotLogin2")
+    public String testNotLogin2() {
+        return "OK";
     }
 
     @GetMapping("/deleteUser")
@@ -98,7 +109,7 @@ public class ApiController {
      */
     @GetMapping("/refreshUserPermission")
     public String refreshUserPermission() {
-        OnlineUser onlineUser = TokenUtils.fetchOnlineUserInfo();
+        OnlineUser onlineUser = TokenUtils.getOnlineUserInfo();
         onlineUserService.refreshUserPermission(onlineUser.getId());
         return "OK";
     }
@@ -110,7 +121,7 @@ public class ApiController {
      */
     @GetMapping("/editUserInfoForciblyLogout")
     public String editUserInfoForciblyLogout(@RequestParam("userId") Long userId) {
-        onlineUserService.editUserInfoForciblyLogout(List.of(userId));
+        onlineUserService.logoutForcibly(List.of(userId));
         return "OK";
     }
 
