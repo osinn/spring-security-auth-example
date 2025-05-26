@@ -135,4 +135,15 @@ public class ApiController {
         onlineUserService.deleteCacheByPrefix(AuthConstant.SYS_RESOURCE_PERMISSION_ALL_CACHE_KEY);
         return "OK";
     }
+
+    /**
+     * 退出登录
+     *
+     * @return
+     */
+    @GetMapping("/logout")
+    public String logout() {
+        TokenUtils.logout();
+        return "OK";
+    }
 }
