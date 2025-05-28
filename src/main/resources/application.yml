@@ -5,7 +5,7 @@ spring:
   data:
     redis:
       database: 6
-      host: 127.0.0.1
+      host: 192.168.1.42
       port: 6379
   datasource:
     #引用项目中的数据库文件
@@ -25,13 +25,7 @@ mybatis-plus:
 # security
 security:
   config:
-    # 建议换成自己的密码
-    expire-time: 14400 # 过期时间默认4小时
-    expire-ratio: 0.5 # 过期时间剩余比例，0-1之间，默认 0.5 即时间过半时刷新token缓存过期时间
-    # 匿名访问url
-    ignoring-urls:
-      - /login
-      - /addUser
+    enable-xss: true
     # 如果配置此处密钥，则需要前端公钥加密传输密码
 #    rsa-private-key: ""
 

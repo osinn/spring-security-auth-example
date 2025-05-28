@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -37,6 +38,7 @@ public class ApiController {
     @Resource
     private IUserService userService;
 
+
     @AuthIgnore
     @PostMapping("/addUser")
     public R<String> addUser(@RequestBody UserEntity userEntity) {
@@ -45,7 +47,7 @@ public class ApiController {
         return R.success();
     }
 
-
+    @AuthIgnore
     @PostMapping("/login")
     public AuthUserInfo login(@RequestBody AuthLoginParam authLoginParam, HttpServletRequest request, HttpServletResponse response) {
         AuthUserInfo authUserInfo = onlineUserService.auth(authLoginParam, request, response);
@@ -66,15 +68,16 @@ public class ApiController {
     }
 
     @GetMapping("/getUserList")
-    @PreAuthorize("@pms.hasPermission('sys:user:list:test')")
+    @PreAuthorize("@pms.hasRole('test|admin')")
     public OnlineUser getUserList() {
+        Set<String> currentUserPermissionCodeAll = TokenUtils.getCurrentUserPermissionCodeAll();
+        Set<String> currentUserRoleCodeAll = TokenUtils.getCurrentUserRoleCodeAll();
         return TokenUtils.getOnlineUserInfo();
     }
 
 
     @GetMapping("/getUserList2")
-    @PreAuthorize("@pms.hasPermission('sys:user:list')")
-    public OnlineUser getUserList2() {
+    public OnlineUser getUserList2(String name) {
         OnlineUser onlineUser = TokenUtils.getOnlineUserInfo();
         return onlineUser;
     }

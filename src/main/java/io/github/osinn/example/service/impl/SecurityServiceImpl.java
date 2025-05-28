@@ -116,7 +116,7 @@ public class SecurityServiceImpl implements ISecurityService {
         AuthRoleInfo jwtRoleInfo = new AuthRoleInfo();
 
         List<ResourcePermission> resourcePermissionList = new ArrayList<>();
-        resourcePermissionList.add(new ResourcePermission(null, "sys:user:list", "用户管理"));
+        resourcePermissionList.add(new ResourcePermission(null, "sys:user:list"));
 
         AuthRoleInfo.BaseRoleInfo roleInfo = new AuthRoleInfo.BaseRoleInfo(1, "demo", "test", null, resourcePermissionList);
 
@@ -132,8 +132,8 @@ public class SecurityServiceImpl implements ISecurityService {
     @Override
     public List<ResourcePermission> getSysResourcePermissionAll() {
         List<ResourcePermission> resourcePermissionList = new ArrayList<>();
-        resourcePermissionList.add(new ResourcePermission(null, "sys:user:list", "用户管理"));
-        resourcePermissionList.add(new ResourcePermission(null, "sys:user:list2", "用户管理2"));
+        resourcePermissionList.add(new ResourcePermission(null, "sys:user:list"));
+        resourcePermissionList.add(new ResourcePermission(null, "sys:user:list2"));
         return resourcePermissionList;
     }
 
