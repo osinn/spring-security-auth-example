@@ -91,18 +91,13 @@ public class SecurityServiceImpl implements ISecurityService {
         if (userEntity == null) {
             return null;
         }
-
-        return new AuthUserInfo(
-                userEntity.getId(),
-                userEntity.getAccount(),
-                userEntity.getUserName(),
-                userEntity.getPassword(),
-                null, // 如果需要额外扩展用户信息，请自赋值一个对象即可, 从在线用户信息中获取 -> onlineUser.getExtendField() 即为此处传入的对象
-                null, // 不需要赋值，内置会自行处理
-                null, // 不需要赋值，内置会自行处理
-                null, // 不需要赋值，内置会自行处理
-                null // 不需要赋值，内置会自行处理
-        );
+        AuthUserInfo authUserInfo = new AuthUserInfo();
+        authUserInfo.setId(userEntity.getId());
+        authUserInfo.setNickname(userEntity.getUserName());
+        authUserInfo.setAccount(userEntity.getAccount());
+        authUserInfo.setPassword(userEntity.getPassword());
+        authUserInfo.setExtendField(null); // 如果需要额外扩展用户信息，请自赋值一个对象即可, 从在线用户信息中获取 -> onlineUser.getExtendField() 即为此处传入的对象
+        return authUserInfo;
     }
 
     /**
